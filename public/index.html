@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>💰 Aplicación de Finanzas Personales</title>
+ <link rel="icon" href="favicon.ico">
+ 
+<style>
+    body {
+      background-color: #f9f9f9;
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #app {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      background-color: #fff;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+      border-radius: 20px;
+      margin-top: 30px;
+    }
+    h1 {
+      font-size: 2.8rem;
+      color: #4a7c59;
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+    h1::before {
+      content: "💰 ";
+    }
+    form {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+      background-color: #e0f7fa;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    input, select {
+      padding: 15px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      font-size: 1.1rem;
+      background-color: #f0f4f8;
+    }
+    button {
+      background-color: #81c784;
+      color: white;
+      padding: 15px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    }
+    button:hover {
+      background-color: #66bb6a;
+    }
+    .summary, .transaction-list {
+      margin: 20px 0;
+      padding: 20px;
+      background-color: #dcedc8;
+      border-radius: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    .summary p {
+      font-size: 1.3rem;
+      color: #388e3c;
+      margin: 10px 0;
+    }
+    .transaction-list h3 {
+      font-size: 1.5rem;
+      color: #388e3c;
+      margin-bottom: 15px;
+    }
+    .transaction-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    .transaction-list li {
+      padding: 15px;
+      background-color: #a5d6a7;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+    }
+    .transaction-list li:nth-child(even) {
+      background-color: #81c784;
+    }
+    .transaction-list li::before {
+      content: "📝 ";
+    }
+    #financialChart {
+      max-width: 100%;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="app">
+    <h1>Aplicación de Finanzas Personales</h1>
+    <form id="nameForm">
+      <label for="userName">Ingresa tu nombre:</label>
+      <input type="text" id="userName" placeholder="Ejemplo: Juan Pérez" />
+      <button type="submit">Confirmar</button>
+    </form>
+    
+    <h2 id="welcomeMessage"></h2>
+
+    <form id="transactionForm">
+      <label for="description">Descripción</label>
+      <input type="text" id="description" placeholder="Ej. Nómina">
+      <label for="amount">Monto</label>
+      <input type="number" id="amount" placeholder="0">
+      <label for="type">Tipo</label>
+      <select id="type">
+        <option value="income">Ingreso</option>
+        <option value="expense">Egreso</option>
+      </select>
+      <button type="submit">Agregar</button>
+    </form>
+
+    <div class="summary">
+      <p>📊 Ingresos: $<span id="incomeTotal">0.00</span></p>
+      <p>💸 Egresos: $<span id="expenseTotal">0.00</span></p>
+      <p>💼 Total: $<span id="totalBalance">0.00</span></p>
+    </div>
+
+    <div class="transaction-list">
+      <h3>Historial de Transacciones</h3>
+      <ul id="transactionList"></ul>
+    </div>
+
+    <canvas id="financialChart"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+ 
+
+  <script>
+    const nameForm = document.getElementById('nameForm');
+    const welcomeMessage = document.getElementById('welcomeMessage');
+    const userNameInput = document.getElementById('userName');
+    const transactionForm = document.getElementById('transactionForm');
+    const incomeTotal = document.getElementById('incomeTotal');
+    const expenseTotal = document.getElementById('expenseTotal');
+    const totalBalance = document.getElementById('totalBalance');
+    const transactionList = document.getElementById('transactionList');
+    const financialChartCtx = document.getElementById('financialChart').getContext('2d');
+
+    let transactions = [];
+    let financialChart;
+
+    nameForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const userName = userNameInput.value;
+      welcomeMessage.textContent = `👋 Bienvenido, ${userName}`;
+    });
+
+    transactionForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const description = document.getElementById('description').value;
+      const amount = parseFloat(document.getElementById('amount').value);
+      const type = document.getElementById('type').value;
+
+      const transaction = { description, amount, type };
+      transactions.push(transaction);
+      updateTransactionList();
+      updateTotals();
+    });
+
+    function updateTransactionList() {
+      transactionList.innerHTML = '';
+      transactions.forEach((transaction, index) => {
+        const listItem = document.createElement('li');
+        listItem.textContent = `${transaction.description} $${transaction.amount.toFixed(2)}`;
+        transactionList.appendChild(listItem);
+      });
+    }
+
+    function updateTotals() {
+      let income = transactions.filter(t => t.type === 'income').reduce((acc, t) => acc + t.amount, 0);
+      let expenses = transactions.filter(t => t.type === 'expense').reduce((acc, t) => acc + t.amount, 0);
+      let total = income - expenses;
+
+      incomeTotal.textContent = income.toFixed(2);
+      expenseTotal.textContent = expenses.toFixed(2);
+      totalBalance.textContent = total.toFixed(2);
+
+      updateChart(income, expenses);
+    }
+
+    function updateChart(income, expenses) {
+      if (financialChart) {
+        financialChart.destroy(); // Destruir el gráfico anterior
+      }
+
+      financialChart = new Chart(financialChartCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Ingresos', 'Egresos'],
+          datasets: [{
+            label: 'Finanzas',
+            data: [income, expenses],
+            backgroundColor: ['#a5d6a7', '#ffccbc'],
+            borderColor: ['#66bb6a', '#ff7043'],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    }
+
+    // Crea el gráfico vacío por defecto al iniciar la página
+    updateChart(0, 0);
+  </script>
+
+</body>
+</html>
