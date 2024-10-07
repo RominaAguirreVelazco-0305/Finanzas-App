@@ -42,21 +42,20 @@ Para instalar y ejecutar la aplicación localmente, sigue los siguientes pasos:
     npm run serve
     ```
 
-La aplicación estará disponible en [http://localhost:8083](http://localhost:8083) en tu navegador.
-
 ## 🖼 Capturas de pantalla
 
 ### Pantalla Principal
 
-![image](https://github.com/user-attachments/assets/c909769d-3c67-4c0d-85a4-61069ce4f4d7)
+![image](https://github.com/user-attachments/assets/e0bfe4b0-0647-4927-9901-2a0ff0755ece)
 
-![image](https://github.com/user-attachments/assets/79025977-a5ac-4de1-9f64-0083cb27b679)
 
+![image](https://github.com/user-attachments/assets/3f6a82b7-af61-4180-8f85-607735f56ab7)
 
 
 ### Gráfico de Finanzas
 
-![image](https://github.com/user-attachments/assets/67d1c250-44db-471f-8340-e2375b71c189)
+![image](https://github.com/user-attachments/assets/e33247e3-b473-47cb-bf8f-564a329bef2e)
+
 
 
 ## 🛠 Tecnologías Utilizadas
