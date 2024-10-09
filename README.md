@@ -80,5 +80,5 @@ Si deseas modificar el diseño o los colores, puedes hacerlo ajustando los estil
 
 
 ## 🌐 Cómo Visualizar mi repositorio:
-Puedes visualizar mi página de vitae en línea visitando el siguiente enlace:https://github.com/RominaAguirreVelazco-0305/Finanzas-App.git
+Puedes visualizar mi página en línea visitando el siguiente enlace:https://github.com/RominaAguirreVelazco-0305/Finanzas-App.git
 ¡Disfruta organizando tus finanzas con esta aplicación! 🎉
