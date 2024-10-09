@@ -83,3 +83,6 @@ Si deseas modificar el diseño o los colores, puedes hacerlo ajustando los estil
 Puedes visualizar mi página en línea visitando el siguiente enlace:https://github.com/RominaAguirreVelazco-0305/Finanzas-App.git
 
 ¡Disfruta organizando tus finanzas con esta aplicación! 🎉
+
+
+## Desarrollado con ❤️ por Romina Aguirre. 
