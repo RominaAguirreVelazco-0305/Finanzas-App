@@ -79,6 +79,6 @@ Para instalar y ejecutar la aplicación localmente, sigue los siguientes pasos:
 Si deseas modificar el diseño o los colores, puedes hacerlo ajustando los estilos en el archivo `App.vue`. El diseño está hecho para ser simple y personalizable. 🖌️
 
 
-## 🌐 Cómo Visualizar la Página
-Puedes visualizar mi currículum vitae en línea visitando el siguiente enlace:https://github.com/RominaAguirreVelazco-0305/Finanzas-App.git
+## 🌐 Cómo Visualizar mi repositorio:
+Puedes visualizar mi página de vitae en línea visitando el siguiente enlace:https://github.com/RominaAguirreVelazco-0305/Finanzas-App.git
 ¡Disfruta organizando tus finanzas con esta aplicación! 🎉
